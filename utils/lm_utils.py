@@ -28,11 +28,11 @@ class Vocabulary(object):
         return self.size
 
 class Corpus(object):
-    def __init__(self, train_list, test_list, reverse=False):
+    def __init__(self, train_list, test_list, embedding_file=None, reverse=False):
         self.vocab = Vocabulary()
 
         corpus_vocab = self.create_vocab(train_list + test_list)
-        embedding_file = config.WORD_EMBEDDING
+        # embedding_file = config.WORD_EMBEDDING
 
         words = []
         glove_embed = []

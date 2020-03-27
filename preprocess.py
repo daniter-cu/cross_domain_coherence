@@ -208,7 +208,7 @@ def get_average_glove(data_name, if_sample=False):
     embed_dict["<EOA>"] = np.random.uniform(size=300).astype(np.float32)
     return embed_dict
 
-def get_lm_hidden(data_name, lm_name, corpus):
+def get_lm_hidden(data_name, lm_name, corpus, limit=None):
     logging.info("Start parsing...")
     file_list = load_file_list(data_name, False)
 
@@ -220,6 +220,8 @@ def get_lm_hidden(data_name, lm_name, corpus):
                 if (line != '<para_break>') and (line != ''):
                     sentences.append(line)
     logging.info("%d sentences in total." % len(sentences))
+    if limit:
+        sentences = sentences[:limit]
 
     with open(os.path.join(config.CHECKPOINT_PATH, lm_name + "_forward.pkl"), "rb") as f:
         hparams = pickle.load(f)
@@ -246,13 +248,15 @@ def get_lm_hidden(data_name, lm_name, corpus):
     for sent in tqdm(sentences):
         fs = [corpus.vocab[w] for w in ['<eos>'] + sent.split() + ['<eos>']]
         fs = torch.LongTensor(fs).unsqueeze(1)
-        fs = fs.to('cuda')
+        if torch.cuda.is_available():
+            fs = fs.to('cuda')
         fout = forward_lm.encode(fs, ini_hidden)
         fout = torch.max(fout, 0)[0].squeeze().data.cpu().numpy().astype(np.float32)
 
         bs = [corpus.vocab[w] for w in ['<eos>'] + sent.split()[::-1] + ['<eos>']]
         bs = torch.LongTensor(bs).unsqueeze(1)
-        bs = bs.to('cuda')
+        if torch.cuda.is_available():
+            bs = bs.to('cuda')
         bout = backward_lm.encode(bs, ini_hidden)
         bout = torch.max(bout, 0)[0].squeeze().data.cpu().numpy().astype(np.float32)
 

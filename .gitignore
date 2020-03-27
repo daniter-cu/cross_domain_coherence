@@ -30,3 +30,4 @@ pytorch_coherence/InferSent/results/
 *.out
 data/*
 checkpoint/*
+.idea/*

@@ -19,7 +19,7 @@ import torch.nn as nn
 import spacy
 from tqdm import tqdm
 
-nlp = spacy.load("en", disable=['tagger', 'ner', 'testcat'])
+nlp = spacy.load("en_core_web_sm", disable=['tagger', 'ner', 'testcat'])
 
 """
 BLSTM (max/mean) encoder

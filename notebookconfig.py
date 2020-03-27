@@ -1,7 +1,7 @@
 from utils.data_utils import WSJ_Bigram_Dataset, WIKI_Bigram_Dataset
 
 # ------------------- PATH -------------------
-ROOT_PATH = "../" #  usually "."
+ROOT_PATH = "../"
 DATA_PATH = "%s/data" % ROOT_PATH
 LOG_PATH = "%s/log" % ROOT_PATH
 CHECKPOINT_PATH = "%s/checkpoint" % ROOT_PATH

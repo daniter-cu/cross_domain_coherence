@@ -137,7 +137,10 @@ class LanguageModel:
             pickle.dump(self.hparams, f, -1)
 
     def load(self, path):
-        self.lm.load_state_dict(torch.load(path))
+        if torch.cuda.is_available() == False:
+            self.lm.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
+        else:
+            self.lm.load_state_dict(torch.load(path))
 
 class LMCoherence:
     def __init__(self, forward_lm, backward_lm, corpus):
