@@ -310,7 +310,10 @@ class BigramCoherence:
             pickle.dump(self.hparams, f, -1)
 
     def load(self, path):
-        self.discriminator.load_state_dict(torch.load(path))
+        if torch.cuda.is_available():
+            self.discriminator.load_state_dict(torch.load(path))
+        else:
+            self.discriminator.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
 
     def load_best_state(self):
         self.discriminator.load_state_dict(self.best_discriminator)
