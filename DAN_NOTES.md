@@ -1,10 +1,7 @@
 # Dan's Notes 
 
 ## Current task:
-We've got the bigram coherence model loaded in a notebook.
-Next step is to write the code to load the model and 
-run the model on a single input. Should be able to get
-this running locally.
+Replace the representation with BERT.
 
 
 ## TODO
@@ -30,3 +27,8 @@ Details:
     * model at ${cluster-src}/coh/cross_domain_coherence/checkpoint
 * Coh model trained for 33 epochs
 * Paper reports : 95.49 
+
+
+We found that some examples from the OntoNotes SRL dataset 
+could be used to trick the "coherence model" when using the 
+possibly undertrained LM representation.
